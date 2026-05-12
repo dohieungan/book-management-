@@ -109,6 +109,13 @@ void addBook() {
         pauseScreen();
         return;
     }
+    for (int i = 0; i < numBooks; i++) {
+        if (strcasecmp(book_title[i], book_title[idx]) == 0) {
+            cout << "Tua sach da ton tai trong he thong. Khong the them!\n";
+            pauseScreen();
+            return;
+        }
+    }
     inputString(book_author[idx],    MAX_NAME, "Tac gia: ");
     inputString(book_publisher[idx], MAX_NAME, "Nha xuat ban: ");
 

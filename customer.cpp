@@ -113,7 +113,9 @@ void addCustomer() {
         if (!isValidPhone(tmp)) {
             cout << "SDT khong hop le (9-11 chu so). Nhap lai!\n";
         } else if (findCustomerByPhone(tmp) != -1) {
-            cout << "SDT da ton tai trong he thong. Nhap lai!\n";
+            cout << "SDT da ton tai trong he thong. Khong the them!\n";
+            pauseScreen();
+            return;
         } else {
             strcpy(cus_phone[idx], tmp);
             phoneDone = 1;
