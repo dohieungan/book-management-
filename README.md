@@ -81,7 +81,8 @@ There is no automated test suite. Use the interactive menu to verify each module
 | Step | Action | Expected result |
 |------|--------|-----------------|
 | View list | Option 1 | 5 pre-loaded customers displayed |
-| Add customer | Option 2 | New customer appears in the list |
+| Add customer (unique phone) | Option 2 | New customer appears in the list |
+| Add customer with duplicate phone | Option 2 | Blocked: "SDT da ton tai trong he thong. Khong the them!" |
 | Edit customer | Option 3 | Updated fields reflected immediately |
 | Delete customer with invoices | Option 4 | Blocked: "Khong the xoa! Khach hang con hoa don trong he thong." |
 | Delete customer without invoices | Option 4 | Confirmation prompt (y/n); deleted on "y" |
@@ -93,7 +94,8 @@ There is no automated test suite. Use the interactive menu to verify each module
 | Step | Action | Expected result |
 |------|--------|-----------------|
 | View list | Option 1 | 10 pre-loaded books displayed |
-| Add book | Option 2 | New book appears in the list |
+| Add book (unique title) | Option 2 | New book appears in the list |
+| Add book with duplicate title | Option 2 | Blocked: "Tua sach da ton tai trong he thong. Khong the them!" |
 | Edit book | Option 3 | Updated fields reflected immediately |
 | Delete book linked to invoice | Option 4 | Blocked: "Khong the xoa! Sach co hoa don trong he thong." |
 | Delete book with stock > 0 (no invoice) | Option 4 | Blocked: stock remaining warning |
@@ -105,9 +107,9 @@ There is no automated test suite. Use the interactive menu to verify each module
 
 | Step | Action | Expected result |
 |------|--------|-----------------|
-| Tao hoa don moi | Option 1 | Enter customer ID → date → ISBN(s) + quantities (blank ISBN to finish); invoice created, discounts and VAT applied, receipt printed |
-| Xem tat ca hoa don | Option 2 | All invoices listed with ID, customer ID, date, items, and total |
-| Xem chi tiet hoa don | Option 3 | Enter invoice ID; full receipt with line items, bulk/VIP discounts, VAT, and final total printed |
+| Create new invoice | Option 1 | Enter customer ID → date → ISBN(s) + quantities (blank ISBN to finish); invoice created, discounts and VAT applied, receipt printed |
+| View all invoices | Option 2 | All invoices listed with ID, customer ID, date, items, and total |
+| View invoice detail | Option 3 | Enter invoice ID; full receipt with line items, bulk/VIP discounts, VAT, and final total printed |
 
 Pricing rules verified during Option 1:
 
@@ -121,8 +123,8 @@ Pricing rules verified during Option 1:
 
 | Step | Action | Expected result |
 |------|--------|-----------------|
-| Xem ton kho toan bo | Option 1 | All books listed; stock < 5 marked "! Sap het", stock = 0 marked "\*\*\* HET HANG \*\*\*" |
-| Nhap hang | Option 2 | Enter ISBN → enter quantity; stock updated immediately (e.g. "Da nhap them 2 quyen. Ton kho moi: 20"), no confirmation prompt |
+| View full stock | Option 1 | All books listed; stock < 5 marked "! Sap het", stock = 0 marked "\*\*\* HET HANG \*\*\*" |
+| Restock | Option 2 | Enter ISBN → enter quantity; stock updated immediately (e.g. "Da nhap them 2 quyen. Ton kho moi: 20"), no confirmation prompt |
 
 **5. Statistics** (Menu → 5)
 
