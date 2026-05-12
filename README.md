@@ -1,157 +1,146 @@
-# Quản Lý Nhà Sách
+# Bookstore Management System
 
-Chương trình C++ console quản lý nhà sách: Khách hàng, Sách, Hóa đơn, Kho, Thống kê.
+A C++ console application for managing a bookstore: customers, books, invoices, inventory, and sales statistics.
 
-## Yêu cầu
+---
 
-Chỉ cần trình biên dịch **g++** (GCC C++) hỗ trợ C++11 — không cần cài thêm thư viện ngoài.
+## Prerequisites (macOS)
 
-| Hệ điều hành | Cách cài g++ |
-|---|---|
-| **macOS** | `xcode-select --install` |
-| **Ubuntu / Debian** | `sudo apt update && sudo apt install g++ make` |
-| **Fedora / RHEL** | `sudo dnf install gcc-c++ make` |
-| **Windows** | Cài [MSYS2](https://www.msys2.org/) → trong terminal MSYS2 chạy: `pacman -S mingw-w64-ucrt-x86_64-gcc make` |
+Only **g++** (GCC C++11) is required — no external libraries.
 
-> Kiểm tra đã cài đúng chưa: `g++ --version` — phải hiện phiên bản ≥ 7.
+Install the compiler via Xcode Command Line Tools:
+
+```bash
+xcode-select --install
+```
+
+Verify the installation:
+
+```bash
+g++ --version   # must show version ≥ 7
+make --version
+```
 
 ---
 
 ## Build
 
-### Cách 1 — dùng Makefile (khuyên dùng)
+### Option 1 — Makefile (recommended)
 
 ```bash
-# macOS / Linux
-cd /path/to/NhaSach
+cd /path/to/25880243
 make
-./25880243
-
-# Windows (MSYS2 terminal)
-cd /path/to/NhaSach
-make
-./25880243.exe
 ```
 
-### Cách 2 — lệnh g++ thủ công
+This compiles all source files and produces the `25880243` binary in the same directory.
+
+To remove the compiled binary:
 
 ```bash
-# macOS / Linux
+make clean
+```
+
+### Option 2 — Manual g++ command
+
+```bash
 g++ -std=c++11 -Wall -o 25880243 \
     main.cpp utils.cpp customer.cpp book.cpp \
     invoice.cpp warehouse.cpp statistics.cpp
-./NhaSach
-
-# Windows (MSYS2 terminal)
-g++ -std=c++11 -Wall -o 25880243.exe \
-    main.cpp utils.cpp customer.cpp book.cpp \
-    invoice.cpp warehouse.cpp statistics.cpp
-./NhaSach.exe
 ```
 
-### Cách 3 — Visual Studio Code
+### Option 3 — VS Code
 
-1. Mở thư mục `NhaSach/` bằng **File → Open Folder**.
-2. Cài hai extension sau nếu chưa có:
-   - **C/C++** — `ms-vscode.cpptools`
-   - **CodeLLDB** — `vadimcn.vscode-lldb`
-3. Nhấn **F5** → chọn cấu hình **RUN BOOKSTORE** → chương trình tự build và chạy ngay trong terminal tích hợp của VS Code.
+1. Open the project folder via **File → Open Folder**.
+2. Install these extensions if not already present:
+   - **C/C++** (`ms-vscode.cpptools`)
+   - **CodeLLDB** (`vadimcn.vscode-lldb`)
+3. Press **F5** and select the **RUN BOOKSTORE** configuration — VS Code builds and runs the program in the integrated terminal.
 
-> Lưu ý: không dùng nút ▶ của extension C/C++ Runner — nó chỉ biên dịch file đang mở, không đủ cho dự án nhiều file này.
-
-### Cách 4 — Visual Studio 2019+
-
-1. Tạo project **Empty C++ Project**.
-2. Thêm tất cả file `.cpp` vào **Source Files** và `.h` vào **Header Files**.
-3. Nhấn **Ctrl+F5** để build và chạy.
+> Do not use the C/C++ Runner extension's play button — it only compiles the currently open file.
 
 ---
 
-## Lưu ý quan trọng
-
-- **Chỉ biên dịch từ mã nguồn** — các file `25880243`, `25880243.exe` trong thư mục là file đã biên dịch sẵn trên máy khác, **không dùng được** trên máy mới. Hãy tự build bằng lệnh trên.
-- Mã nguồn dùng thư viện chuẩn C++ (`iostream`, `iomanip`, `cstring`, `cstdlib`) — không phụ thuộc gì ngoài.
-- Hàm xóa màn hình và dừng chương trình đã có guard `#ifdef _WIN32` nên chạy đúng trên cả Windows lẫn macOS/Linux.
-
----
-
-## Chạy chương trình
+## Run
 
 ```bash
-./25880243        # macOS / Linux
-./25880243.exe    # Windows
+./25880243
 ```
 
-Khi khởi động, chương trình tự nạp dữ liệu mẫu gồm **5 khách hàng, 10 đầu sách, 20 hóa đơn** để test ngay.
+On startup, the program automatically loads sample data: **5 customers, 10 books, 20 invoices**, so you can test all features immediately.
 
 ---
 
-## Cấu trúc file
+## Test
+
+There is no automated test suite. Use the interactive menu to verify each module manually.
+
+### Suggested test flow
+
+**1. Customer management** (Menu → 1)
+
+| Step | Action | Expected result |
+|------|--------|-----------------|
+| View list | Option 1 | 5 pre-loaded customers displayed |
+| Add customer | Option 2 | New customer appears in the list |
+| Edit customer | Option 3 | Updated fields reflected immediately |
+| Delete customer with invoices | Option 4 | Blocked: "Khong the xoa! Khach hang con hoa don trong he thong." |
+| Delete customer without invoices | Option 4 | Confirmation prompt (y/n); deleted on "y" |
+| Search by phone (exact) | Option 5 | Returns customer only on 100% phone match |
+| Search by name (exact) | Option 6 | Returns customer only on 100% name match (case-insensitive) |
+
+**2. Book management** (Menu → 2)
+
+| Step | Action | Expected result |
+|------|--------|-----------------|
+| View list | Option 1 | 10 pre-loaded books displayed |
+| Add book | Option 2 | New book appears in the list |
+| Edit book | Option 3 | Updated fields reflected immediately |
+| Delete book linked to invoice | Option 4 | Blocked: "Khong the xoa! Sach co hoa don trong he thong." |
+| Delete book with stock > 0 (no invoice) | Option 4 | Blocked: stock remaining warning |
+| Delete book with stock = 0 and no invoice | Option 4 | Confirmation prompt (y/n); deleted on "y" |
+| Search by ISBN | Option 5 | Matching book detail returned |
+| Search by title | Option 6 | Matching books returned |
+
+**3. Invoice / sales** (Menu → 3)
+
+| Scenario | What to enter | Expected result |
+|----------|--------------|-----------------|
+| Bulk discount | Same-genre qty > 5 | 5% line discount applied |
+| VIP discount | VIP customer | Additional 10% off subtotal |
+| VAT | Any invoice | 10% VAT added to final total |
+
+**4. Inventory** (Menu → 4)
+
+- Option 1: verify low-stock items are highlighted.
+- Option 2: enter ISBN then quantity; system updates stock immediately with no confirmation prompt (e.g. "Da nhap them 2 quyen. Ton kho moi: 20").
+
+**5. Statistics** (Menu → 5)
+
+- Check total stock count, breakdown by genre, customer type counts, and daily/monthly revenue reports.
+
+---
+
+## Project structure
 
 ```
-NhaSach/
- Makefile          # Build script (make)
- constants.h       # Hằng số kích thước mảng, VAT, giảm giá
- utils.h/cpp       # Nhập chuỗi an toàn, kiểm tra ngày/SĐT, clearScreen/pauseScreen
- customer.h/cpp    # Quản lý khách hàng
- book.h/cpp        # Quản lý sách
- invoice.h/cpp     # Lập hóa đơn, tính tiền
- warehouse.h/cpp   # Quản lý kho
- statistics.h/cpp  # Thống kê doanh thu, tồn kho
- main.cpp          # Menu chính, loadSampleData()
+25880243/
+├── Makefile          # Build script
+├── constants.h       # Array sizes, VAT rate, discount constants
+├── utils.h/cpp       # Safe string input, date/phone validation, clearScreen/pauseScreen
+├── customer.h/cpp    # Customer management
+├── book.h/cpp        # Book management
+├── invoice.h/cpp     # Invoice creation and pricing
+├── warehouse.h/cpp   # Inventory management
+├── statistics.h/cpp  # Revenue and stock statistics
+└── main.cpp          # Main menu and sample data loader
 ```
 
 ---
 
-## Chức năng
+## Business rules
 
-### 1. Quản lý khách hàng
-| Tùy chọn | Chức năng |
-|----------|-----------|
-| 1 | Xem danh sách khách hàng |
-| 2 | Thêm khách hàng mới |
-| 3 | Chỉnh sửa thông tin khách hàng |
-| 4 | Xóa khách hàng (chặn nếu còn hóa đơn liên quan) |
-| 5 | Tìm kiếm theo số điện thoại |
-| 6 | Tìm kiếm theo họ tên |
-
-### 2. Quản lý sách
-| Tùy chọn | Chức năng |
-|----------|-----------|
-| 1 | Xem danh sách sách |
-| 2 | Thêm đầu sách mới |
-| 3 | Chỉnh sửa thông tin sách |
-| 4 | Xóa sách (chỉ khi tồn kho = 0) |
-| 5 | Tìm kiếm theo ISBN |
-| 6 | Tìm kiếm theo tên sách |
-
-### 3. Lập hóa đơn bán hàng
-Nhập mã KH và danh sách ISBN + số lượng. Tự động tính tổng tiền với các quy tắc:
-- Giảm 5% nếu mua > 5 quyển cùng thể loại
-- Giảm thêm 10% cho khách VIP
-- Cộng thuế VAT 10%
-
-### 4. Quản lý kho
-| Tùy chọn | Chức năng |
-|----------|-----------|
-| 1 | Xem tồn kho toàn bộ (highlight sắp hết / hết hàng) |
-| 2 | Nhập hàng — cập nhật số lượng tồn kho |
-
-### 5. Thống kê
-| Tùy chọn | Chức năng |
-|----------|-----------|
-| 1 | Tổng số lượng sách trong kho |
-| 2 | Số lượng sách theo thể loại |
-| 3 | Số lượng khách hàng theo loại thẻ (Thường / VIP) |
-| 4 | Doanh thu theo ngày hoặc theo tháng |
-| 5 | Danh sách sách hết hàng (tồn kho = 0) |
-
----
-
-## Quy định nghiệp vụ
-
-| Quy định | Chi tiết |
-|----------|----------|
-| Giảm giá số lượng | Mua > 5 quyển cùng thể loại → giảm 5% dòng đó (`BULK_THRESHOLD=5`, `BULK_DISCOUNT=0.05`) |
-| Giảm giá VIP | Khách VIP → giảm thêm 10% trên tổng sau bulk (`VIP_DISCOUNT=0.10`) |
-| Thuế VAT | Cộng 10% trên tổng sau tất cả giảm giá (`VAT_RATE=0.10`) |
+| Rule | Detail |
+|------|--------|
+| Bulk discount | Buying > 5 copies of same-genre books → 5% off that line (`BULK_THRESHOLD=5`, `BULK_DISCOUNT=0.05`) |
+| VIP discount | VIP customers get an additional 10% off the post-bulk subtotal (`VIP_DISCOUNT=0.10`) |
+| VAT | 10% VAT applied to the total after all discounts (`VAT_RATE=0.10`) |

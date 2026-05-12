@@ -3,6 +3,7 @@
 #include <cstdio>
 #include <cstring>
 #include <cstdlib>
+#include <strings.h>
 #include "customer.h"
 #include "invoice.h"
 #include "utils.h"
@@ -299,7 +300,7 @@ void searchCustomerByName(const char* name) {
                  << setw(8)  << "Loai" << "\n";
     printLine(115);
     for (int i = 0; i < numCustomers; i++) {
-        if (strContainsCaseInsensitive(cus_name[i], name)) {
+        if (strcasecmp(cus_name[i], name) == 0) {
             cout << left << setw(8)  << cus_id[i]
                          << setw(22) << cus_name[i]
                          << setw(12) << cus_phone[i]

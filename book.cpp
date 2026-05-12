@@ -4,6 +4,7 @@
 #include <cstring>
 #include <cstdlib>
 #include "book.h"
+#include "invoice.h"
 #include "utils.h"
 
 using namespace std;
@@ -209,6 +210,16 @@ void deleteBook() {
         pauseScreen();
         return;
     }
+    for (int i = 0; i < numInvoices; i++) {
+        for (int j = 0; j < inv_item_count[i]; j++) {
+            if (strcmp(inv_isbn[i][j], isbn) == 0) {
+                cout << "Khong the xoa! Sach co hoa don trong he thong.\n";
+                pauseScreen();
+                return;
+            }
+        }
+    }
+
     if (book_stock[idx] != 0) {
         cout << "Khong the xoa! Sach con " << book_stock[idx] << " quyen trong kho.\n";
         pauseScreen();
