@@ -98,21 +98,31 @@ There is no automated test suite. Use the interactive menu to verify each module
 | Delete book linked to invoice | Option 4 | Blocked: "Khong the xoa! Sach co hoa don trong he thong." |
 | Delete book with stock > 0 (no invoice) | Option 4 | Blocked: stock remaining warning |
 | Delete book with stock = 0 and no invoice | Option 4 | Confirmation prompt (y/n); deleted on "y" |
-| Search by ISBN | Option 5 | Matching book detail returned |
-| Search by title | Option 6 | Matching books returned |
+| Search by ISBN (exact) | Option 5 | Returns book detail only on 100% ISBN match |
+| Search by title (exact) | Option 6 | Returns book only on 100% title match (case-insensitive) |
 
 **3. Invoice / sales** (Menu → 3)
 
+| Step | Action | Expected result |
+|------|--------|-----------------|
+| Tao hoa don moi | Option 1 | Enter customer ID → date → ISBN(s) + quantities (blank ISBN to finish); invoice created, discounts and VAT applied, receipt printed |
+| Xem tat ca hoa don | Option 2 | All invoices listed with ID, customer ID, date, items, and total |
+| Xem chi tiet hoa don | Option 3 | Enter invoice ID; full receipt with line items, bulk/VIP discounts, VAT, and final total printed |
+
+Pricing rules verified during Option 1:
+
 | Scenario | What to enter | Expected result |
 |----------|--------------|-----------------|
-| Bulk discount | Same-genre qty > 5 | 5% line discount applied |
-| VIP discount | VIP customer | Additional 10% off subtotal |
-| VAT | Any invoice | 10% VAT added to final total |
+| Bulk discount | Same-genre total qty > 5 | 5% line discount applied, shown as "(-5%)" |
+| VIP discount | VIP customer ID | Additional 10% off post-bulk subtotal |
+| VAT | Any invoice | 10% VAT added after all discounts |
 
 **4. Inventory** (Menu → 4)
 
-- Option 1: verify low-stock items are highlighted.
-- Option 2: enter ISBN then quantity; system updates stock immediately with no confirmation prompt (e.g. "Da nhap them 2 quyen. Ton kho moi: 20").
+| Step | Action | Expected result |
+|------|--------|-----------------|
+| Xem ton kho toan bo | Option 1 | All books listed; stock < 5 marked "! Sap het", stock = 0 marked "\*\*\* HET HANG \*\*\*" |
+| Nhap hang | Option 2 | Enter ISBN → enter quantity; stock updated immediately (e.g. "Da nhap them 2 quyen. Ton kho moi: 20"), no confirmation prompt |
 
 **5. Statistics** (Menu → 5)
 

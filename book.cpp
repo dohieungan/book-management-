@@ -3,6 +3,7 @@
 #include <cstdio>
 #include <cstring>
 #include <cstdlib>
+#include <strings.h>
 #include "book.h"
 #include "invoice.h"
 #include "utils.h"
@@ -297,7 +298,7 @@ void searchBookByTitle(const char* title) {
                   << setw(6) << "Kho" << "\n";
     printLine(100);
     for (int i = 0; i < numBooks; i++) {
-        if (strContainsCaseInsensitive(book_title[i], title)) {
+        if (strcasecmp(book_title[i], title) == 0) {
             cout << left  << setw(10) << book_isbn[i]
                           << setw(30) << book_title[i]
                           << setw(20) << book_author[i]
